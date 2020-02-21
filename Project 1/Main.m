@@ -1,7 +1,7 @@
-k=4;
+k=1;
 syms x;
 L = 1;                %Total length
-N_e = 32;              %number of elements
+N_e = 256;              %number of elements
 E = 0.1;
 f = -14*x^2-k^2*cos(2*pi*k*x/L);
 f = matlabFunction(f);

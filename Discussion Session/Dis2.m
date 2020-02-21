@@ -16,7 +16,7 @@ a = K\R;
 K = zeros(Nn,Nn);
 Ke = rand(4,4);
 Conn = [1,12,24,48];
-K[Conn,Conn] = Ke;
+K(Conn,Conn) = Ke;
 
 
 %%%vector_multiplication
