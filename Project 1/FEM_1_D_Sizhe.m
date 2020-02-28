@@ -1,4 +1,4 @@
-classdef FEM_1_D_Roger < handle
+classdef FEM_1_D_Sizhe < handle
 
     properties
         L;      %total length
@@ -22,7 +22,7 @@ classdef FEM_1_D_Roger < handle
     end
     
     methods
-        function obj = FEM_1_D_Roger(L, N_e, E, Shape_function_type,B_C_type,B_C_1,B_C_2,f,u_true,u_diff)
+        function obj = FEM_1_D_Sizhe(L, N_e, E, Shape_function_type,B_C_type,B_C_1,B_C_2,f,u_true,u_diff)
             %FEM_1_D Construct an instance of this class
             %   Initialize elements, Stiff matrix and forcing vector
             obj.L = L;
@@ -61,7 +61,8 @@ classdef FEM_1_D_Roger < handle
                     J = obj.Nodes(id)'*obj.Shape_func.shape_func_der(l,:)';
                     obj.K(id,id) = obj.K(id,id)+obj.Shape_func.wts(l)*obj.Shape_func.shape_func_der(l,:)'...
                         *1/J*obj.E*obj.Shape_func.shape_func_der(l,:)*1/J*J;
-                    obj.R(id) = obj.R(id)+obj.Shape_func.wts(l)*obj.f(X)*obj.Shape_func.shape_func(l)'*J;
+                    increase = obj.Shape_func.wts(l).*obj.f(X).*(obj.Shape_func.shape_func(l,:)'*J);
+                    obj.R(id) = obj.R(id)+ increase;
                 end
             end
         end
@@ -135,7 +136,7 @@ classdef FEM_1_D_Roger < handle
                     dU_n = obj.answer(id)'*(obj.Shape_func.shape_func_der(l,:))'*(1/J);
                     error_der = error_der + obj.Shape_func.wts(l)*(obj.u_diff(X)-dU_n)*obj.E*...
                         (obj.u_diff(X)-dU_n)*J;
-                    error_num = error_num + obj.Shape_func.wts(l)*(dU_n)^2*obj.E*J;
+                    error_num = error_num + obj.Shape_func.wts(l)*(obj.u_diff(X))^2*obj.E*J;
                 end
             end
             error = error_der/error_num;

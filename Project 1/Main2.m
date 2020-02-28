@@ -22,7 +22,7 @@ for N = 0:5
     hold on;
     for n = 0:4
         N_e = k*4*2^n;
-        fem2 = FEM_1_D_Roger(L,N_e,E,1,'u-u',0.1,1,f,u_true,u_diff);
+        fem2 = FEM_1_D_Sizhe(L,N_e,E,1,'u-u',0.1,1,f,u_true,u_diff);
         fem2.gen_K_R();
         fem2.post_process();
         fem2.solve();
@@ -35,13 +35,14 @@ for N = 0:5
         plot(x,fem2.solution);
         hold on;
     end
-    title(append('k=',string(k)));
-    legend("U\_True",...
+    title(append('k=',string(k)),'FontSize',20);
+    lgd = legend("U\_True",...
     append("N_e = ",string(k*4*2^0)," Error = ",string(error(2,1,N+1))),...
     append("N_e = ",string(k*4*2^1)," Error = ",string(error(2,2,N+1))),...
     append("N_e = ",string(k*4*2^2)," Error = ",string(error(2,3,N+1))),...
     append("N_e = ",string(k*4*2^3)," Error = ",string(error(2,4,N+1))),...
     append("N_e = ",string(k*4*2^4)," Error = ",string(error(2,5,N+1))));
+    lgd.FontSize = 14;
     hold off;
 end
 
@@ -57,12 +58,13 @@ for i = 1:6
     hold on;
 end
 
-title('error to 1/N_e');
-legend(append('k=1, y=',string(fit(1,1)),'+',string(fit(1,2))),...
+title('error to 1/N_e','FontSize',20);
+lgd_=legend(append('k=1, y=',string(fit(1,1)),'+',string(fit(1,2))),...
     append('k=2, y=',string(fit(2,1)),'+',string(fit(2,2))),...
     append('k=4, y=',string(fit(3,1)),'+',string(fit(3,2))),...
     append('k=8, y=',string(fit(4,1)),'+',string(fit(4,2))),...
     append('k=16, y=',string(fit(5,1)),'+',string(fit(5,2))),...
     append('k=32, y=',string(fit(6,1)),'+',string(fit(6,2))));
-xlabel('log(1/N_e)');
-ylabel('log(error)');
+lgd_.FontSize = 14;
+xlabel('log(1/N_e)','FontSize',14);
+ylabel('log(error)','FontSize',14);
